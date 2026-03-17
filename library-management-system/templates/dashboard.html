@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Dashboard</h2>
+<div class="row">
+  <div class="col-md-3"><div class="card p-3 mb-2 bg-light"><h6>Total user accounts</h6><h3>{{ total_users }}</h3></div></div>
+  <div class="col-md-3"><div class="card p-3 mb-2 bg-light"><h6>Total book entries</h6><h3>{{ total_books }}</h3></div></div>
+  <div class="col-md-3"><div class="card p-3 mb-2 bg-light"><h6>Issued books</h6><h3>{{ issued_books }}</h3></div></div>
+  <div class="col-md-3"><div class="card p-3 mb-2 bg-light"><h6>Available copies</h6><h3>{{ available_books }}</h3></div></div>
+</div>
+<div class="mt-3">
+  <a class="btn btn-primary" href="{{ url_for('books') }}">Manage Books</a>
+  <a class="btn btn-secondary" href="{{ url_for('issued_books') }}">View Issued Books</a>
+</div>
+{% endblock %}

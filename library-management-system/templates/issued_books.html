@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Issued Books</h2>
+<form method="post" class="row g-3 mb-3">
+  <div class="col-md-3"><select class="form-select" name="book_id" required><option value="">Select Book</option>{% for book in books %}<option value="{{ book.id }}">{{ book.title }} ({{ book.author }})</option>{% endfor %}</select></div>
+  <div class="col-md-3"><select class="form-select" name="user_id" required><option value="">Select User</option>{% for user in users %}<option value="{{ user.id }}">{{ user.username }}</option>{% endfor %}</select></div>
+  <div class="col-md-2"><input type="number" name="days" min="1" value="14" class="form-control" placeholder="Days"></div>
+  <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Issue Book</button></div>
+</form>
+<table class="table table-bordered table-striped">
+  <thead><tr><th>ID</th><th>Book</th><th>Issued to</th><th>Issue Date</th><th>Due Date</th><th>Return Date</th><th>Fine (₹)</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for rec in issued_records %}
+    <tr>
+      <td>{{ rec.id }}</td>
+      <td>{{ rec.title }} - {{ rec.author }}</td>
+      <td>{{ rec.username }}</td>
+      <td>{{ rec.issue_date[:10] }}</td>
+      <td>{{ rec.due_date[:10] }}</td>
+      <td>{{ rec.return_date[:10] if rec.return_date else 'Not returned' }}</td>
+      <td>{{ rec.fine }}</td>
+      <td>
+        {% if not rec.return_date %}
+        <form action="{{ url_for('return_book', issue_id=rec.id) }}" method="post">
+          <button class="btn btn-sm btn-success" type="submit">Return</button>
+        </form>
+        {% else %}--{% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
