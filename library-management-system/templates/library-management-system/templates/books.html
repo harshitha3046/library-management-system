@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Add / Manage Books</h2>
+<form method="post" class="row g-3 mb-3">
+  <div class="col-md-4"><input type="text" class="form-control" name="title" placeholder="Title" required></div>
+  <div class="col-md-4"><input type="text" class="form-control" name="author" placeholder="Author" required></div>
+  <div class="col-md-2"><input type="number" min="1" class="form-control" name="copies" placeholder="Copies" required></div>
+  <div class="col-md-2"><button type="submit" class="btn btn-success w-100">Add Book</button></div>
+</form>
+<table class="table table-bordered table-striped">
+  <thead><tr><th>ID</th><th>Title</th><th>Author</th><th>Total Copies</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for book in books %}
+    <tr>
+      <td>{{ book.id }}</td>
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.total_copies }}</td>
+      <td>
+        <form action="{{ url_for('delete_book', book_id=book.id) }}" method="post" onsubmit="return confirm('Delete this book?');">
+          <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

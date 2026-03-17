@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-8 text-center">
+    <h1>Welcome to Library Management System</h1>
+    <p class="lead">Use the navigation bar to login, register, manage books, and handle issue/return operations.</p>
+    {% if session.get('username') %}
+      <p>Signed in as <strong>{{ session.username }}</strong></p>
+      <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+    {% else %}
+      <a href="{{ url_for('login') }}" class="btn btn-success me-2">Login</a>
+      <a href="{{ url_for('register') }}" class="btn btn-secondary">Register</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
